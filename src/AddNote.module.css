@@ -10,6 +10,7 @@ form {
 
 .addNote {
     background-color: #456;
+    width: 550px;
     padding: 50px;
     border-radius: 15px;
 }
@@ -27,6 +28,7 @@ h2, label, button {
 
 input{
     height: 30px;
+    width: 100%;
 }
 
 input:hover {

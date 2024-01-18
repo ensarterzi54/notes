@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import styles from '../AddNote.module.css'
+import { useDispatch } from 'react-redux'
+import { addNote } from '../reducers/Note'
 const AddNote = () => {
-  // State kullanarak başlık ve içerik bilgilerini tutuyoruz
   const [title, setTitle] = useState('');
-  const [description, setIcerik] = useState('');
+  const [description, setDescription] = useState('');
+  const dispatch = useDispatch()
 
-  // Notu kaydetme fonksiyonu
-  const addNote = () => {
-    // Burada notu kaydetme işlemleri yapılabilir
-    console.log('Başlık:', title);
-    console.log('İçerik:', description);
-
-    // Kaydedildikten sonra başlık ve içeriği sıfırla
-    setTitle('');
-    setIcerik('');
-  };
-
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(addNote({ noteTitle: title, noteDescription: description }))
+  }
+  
   return (
     <div className={styles.addNote}>
       <h2 className={styles.addNoteTitle}>Not Ekle</h2>
-      <form>
+      <form onSubmit={handleSubmit} className='ml-5'>
         <div>
           <label htmlFor="title">Başlık:</label>
           <input
@@ -34,10 +30,10 @@ const AddNote = () => {
           <textarea
             id="description"
             value={description}
-            onChange={(e) => setIcerik(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <button type="button" onClick={addNote}>
+        <button type="submit" onClick={addNote}>
           Notu Kaydet
         </button>
       </form>
