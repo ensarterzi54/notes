@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '../AddNote.module.css'
 import { useDispatch } from 'react-redux'
 import { addNote } from '../reducers/Note'
+import { uid } from 'uid';
 const AddNote = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -9,7 +10,7 @@ const AddNote = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addNote({ noteTitle: title, noteDescription: description }))
+    dispatch(addNote({id: uid(), noteTitle: title, noteDescription: description }))
   }
   
   return (
