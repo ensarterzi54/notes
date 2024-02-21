@@ -1,8 +1,8 @@
 import './App.css';
 import NavBar from './components/NavBar';
 import ColorContext from './contexts/ColorContext';
-import AddNote from './pages/AddNote';
-import Notes from './pages/Notes';
+import AddNote from './pages/AddNote/AddNote';
+import Notes from './pages/Notes/Notes';
 import React from 'react'
 function App() {
   return (

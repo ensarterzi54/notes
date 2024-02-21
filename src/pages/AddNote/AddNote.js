@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from '../AddNote.module.css'
+import styles from '../AddNote/AddNote.css'
 import { useDispatch } from 'react-redux'
-import { addNote } from '../reducers/Note'
+import { addNote } from '../../reducers/Note'
 import { uid } from 'uid';
 const AddNote = () => {
   const [title, setTitle] = useState('');
@@ -14,9 +14,9 @@ const AddNote = () => {
   }
   
   return (
-    <div className={styles.addNote}>
-      <h2 className={styles.addNoteTitle}>Not Ekle</h2>
-      <form onSubmit={handleSubmit} className='ml-5'>
+    <div className="addNote">
+      <h2 className="addNoteTitle">Not Ekle</h2>
+      <form className='formNote ml-5' onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title">Başlık:</label>
           <input
@@ -34,7 +34,7 @@ const AddNote = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <button type="submit" onClick={addNote}>
+        <button className="addNoteButton" type="submit" onClick={addNote}>
           Notu Kaydet
         </button>
       </form>

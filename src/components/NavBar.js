@@ -17,6 +17,10 @@ const NavBar = () => {
 
                 <li><button>Kayıt Ol</button></li>
             </ul>
+
+            <div>
+                user bilgisi gelecek
+            </div>
         </div>
     )
 }
