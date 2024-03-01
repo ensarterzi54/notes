@@ -7,6 +7,7 @@ export const login = async () => {
     console.log("sdsf")
     const result = await signInWithPopup(auth, provider);
     console.log("result: ", result);
+    return result;
 }
 
 export const logout = async () => {
