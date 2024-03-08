@@ -20,6 +20,7 @@ const AddNote = () => {
         <div>
           <label htmlFor="title">Başlık:</label>
           <input
+            className="titleInput"
             type="text"
             id="title"
             value={title}
@@ -29,6 +30,7 @@ const AddNote = () => {
         <div>
           <label htmlFor="description">İçerik:</label>
           <textarea
+            className="txta"
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
