@@ -1,13 +1,11 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext } from "react"
 import { database } from "../firebase/firebaseConfig"
-import { child, get, ref, set } from "firebase/database"
+import { onValue, ref, set } from "firebase/database"
 import { AuthContext } from "./AuthContext";
-import { uid } from 'react-uid';
 
 export const NotesContext = createContext(null)
 
 const NotesContextProvider = ({ children }) => {
-    const [notes, setNotes] = useState("")
     const { user } = useContext(AuthContext)
 
     const addNote = (title, note) => {
@@ -16,21 +14,22 @@ const NotesContextProvider = ({ children }) => {
             note: note
         });
     }
-    
-    const getNotes = () => {
-        get(child(database, `${user.user.displayName}/${user.user.uid}/notes`)).then((snapshot) => {
-            if (snapshot.exists()) {
-              console.log(snapshot.val());
+    const getData = (user) => {
+        return new Promise((resolve, reject) => {
+            if (user !== null) {
+                console.log("ifede")
+                const starCountRef = ref(database, `/${user.user.displayName}/${user.user.uid}/notes`);
+                onValue(starCountRef, (snapshot) => {
+                const data = snapshot.val();
+                    resolve(data)
+                });
             } else {
-              console.log("No data available");
+                reject(new Error("User is null"));
             }
-          }).catch((error) => {
-            console.error(error);
-          });
+        })
     }
-
     return (
-        <NotesContext.Provider value={{ notes, addNote, getNotes }}>
+        <NotesContext.Provider value={{ addNote, getData }}>
             { children }
         </NotesContext.Provider>
     )

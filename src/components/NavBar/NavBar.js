@@ -14,7 +14,7 @@ const NavBar = () => {
     return (
         <div className="nav container">
             <div>
-                <img src={user ? user.user.photoURL : null} style={imgStyle} alt="" />
+                { user ? <img src={user ? user.user.photoURL : null} style={imgStyle} alt="" /> : null }
                 
                 <span>{ user ? user.user.email : null }</span>
             </div>
