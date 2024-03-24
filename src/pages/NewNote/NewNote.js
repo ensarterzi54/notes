@@ -1,14 +1,16 @@
 import React, { useContext, useState } from 'react'
 import { NotesContext } from '../../contexts/NotesContext';
-
+import { AuthContext } from '../../contexts/AuthContext';
 const NewNote = () => {
     const [title, setTitle] = useState("")
     const [note, setNote] = useState("")
-    const { addNote } = useContext(NotesContext)
-
-    const handleSubmit = (event) => {
+    const { addNote, getData } = useContext(NotesContext)
+    const { user } = useContext(AuthContext)
+    
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        addNote(title, note)
+        await addNote(title, note)
+        getData(user)
     }
 
     return (
