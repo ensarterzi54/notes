@@ -9,7 +9,8 @@ const NotesContextProvider = ({ children }) => {
     const { user } = useContext(AuthContext)
     const [notes, setNotes] = useState(null)
 
-    const addNote = (title, note) => {
+    const addNote = async (title, note) => {
+        await fillNotes()
         const currentDate = new Date();
         const dateString = currentDate.toISOString();
         const users = {
@@ -42,6 +43,7 @@ const NotesContextProvider = ({ children }) => {
                 onValue(starCountRef, (snapshot) => {
                 const data = snapshot.val();
                     resolve(data)
+                    setNotes(data)
                 });
             } else {
                 resolve(null)
@@ -52,15 +54,19 @@ const NotesContextProvider = ({ children }) => {
         console.log("id : ", noteID)
         set(ref(database, `users/${userID}/notes/${noteID}`), null)
     }
-    useEffect(() => {
-        getData(user).then((res) => {
-            console.log("res context: ", res)
 
-            setNotes(res ? res : null)
-            
-            console.log("notes: ", notes)
-            
-        })
+    const fillNotes = async () => {
+        const res = await getData(user);
+        setNotes(res ? res : null);
+    }
+    
+    useEffect(() => {
+        const starCountRef = ref(database, `users/${user.user.uid}/notes`);
+        onValue(starCountRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log("hj",data)
+            setNotes(data)
+        });
     }, [])
     return (
         <NotesContext.Provider value={{ addNote, getData, removeNote }}>

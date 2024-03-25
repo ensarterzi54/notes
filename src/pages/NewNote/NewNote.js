@@ -10,7 +10,8 @@ const NewNote = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         await addNote(title, note)
-        getData(user)
+        setTitle("")
+        setNote("")
     }
 
     return (
