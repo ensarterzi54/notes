@@ -40,10 +40,7 @@ const Notes = ({ setUpdateItemData }) => {
   const deleteNote = async (name, userId, noteId) => {
     await removeNote(name, userId, noteId)
     get()
-  }
-
-  const update = (title, note) => {
-
+    setUpdateItemData({})
   }
 
   useEffect(() => {

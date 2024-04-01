@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { NotesContext } from '../../contexts/NotesContext';
 import { useForm } from 'react-hook-form';
 
 const NewNote = ({ selectedItem }) => {
-
-    console.log("sleeted item", selectedItem);
-
+    const [btnControl, setBtnControl] = useState(true)
     const { addNote, getData } = useContext(NotesContext)
 
     const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm()
@@ -15,10 +13,17 @@ const NewNote = ({ selectedItem }) => {
         reset()
     }
 
-    if (selectedItem.note && selectedItem.title) {
-        setValue("Title", selectedItem.title)
-        setValue("Note", selectedItem.note)
-    }
+    useEffect(() => {
+        console.log("newNote selectedItem: ",selectedItem)
+        if (selectedItem.note && selectedItem.title) {
+            setValue("Title", selectedItem.title);
+            setValue("Note", selectedItem.note);
+            setBtnControl(!btnControl)
+        } else {
+            setValue("Title","");
+            setValue("Note", "");
+        }
+    }, [selectedItem]);
 
     // const handleSubmit = async (event) => {
     //     event.preventDefault();
@@ -39,11 +44,7 @@ const NewNote = ({ selectedItem }) => {
                         {...register("Title", {
                             required: { value: true, message: "Doldurulması zorunlu alan" },
                             minLength: { value: 2, message: "En az 2 karakter girebilirsiniz." },
-                            maxLength: { value: 255, message: "En fazla 255 karakter girebilirsiniz." },
-                            pattern: {
-                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: "invalid email address"
-                            }
+                            maxLength: { value: 255, message: "En fazla 255 karakter girebilirsiniz." }
                         })}
                     />
                     {errors.Title && <span className="text-danger">{errors.Title.message}</span>}
@@ -63,8 +64,12 @@ const NewNote = ({ selectedItem }) => {
                     />
                     {errors.Note && <span className="text-danger">{errors.Note.message}</span>}
                 </div>
-                <button type="button">aaaa</button>
-                <button type="submit">Ekle</button>
+                {
+                    btnControl ?
+                        <button type="submit">Notu Ekle</button>
+                    :
+                        <button type="submit">Değişiklikleri kaydet</button>
+                }
             </form>
         </div>
     )
