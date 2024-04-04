@@ -58,11 +58,19 @@ const Notes = ({ setUpdateItemData }) => {
 
   return (
     <div className="col-md-6 mt-5 notes">
-      <ul>
+      <ul className="notesList">
         {datas ? datas.map((item, index) =>
-          <li key={index} className="mt-2 mb-2">{item.title} - {item.note}
-            <button onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)} type="button" className="btn btn-outline-primary">SİL</button> -
-            <button type="button" className="btn btn-outline-primary" onClick={() => setUpdateItemData(item)}>GÜNCELLE</button>
+          <li key={index} className="mt-2 mb-2">
+            <div className="divInLi">
+              <div className="noteInfo">
+                <span>Başlık:</span> {item.title} - 
+                <span>Açıklama:</span> {item.note}
+              </div>
+              <div>
+                <button onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)} type="button" className="btn btn-outline-primary">SİL</button> -
+                <button type="button" className="btn btn-outline-primary" onClick={() => setUpdateItemData(item)}>GÜNCELLE</button>
+              </div>
+            </div>
           </li>
         )
           :

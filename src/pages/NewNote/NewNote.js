@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { NotesContext } from '../../contexts/NotesContext';
 import { useForm } from 'react-hook-form';
-
-const NewNote = ({ selectedItem }) => {
+import "../NewNote/NewNote.css"
+const NewNote = ({ selectedItem, setUpdateItemData }) => {
     const [btnControl, setBtnControl] = useState(true)
-    const { addNote, getData } = useContext(NotesContext)
+    const { addNote, updateNote } = useContext(NotesContext)
 
     const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm()
 
@@ -18,12 +18,28 @@ const NewNote = ({ selectedItem }) => {
         if (selectedItem.note && selectedItem.title) {
             setValue("Title", selectedItem.title);
             setValue("Note", selectedItem.note);
-            setBtnControl(!btnControl)
+            setBtnControl(false)
         } else {
             setValue("Title","");
             setValue("Note", "");
+            setBtnControl(true)
         }
     }, [selectedItem]);
+
+    const clearNote = () => {
+        setUpdateItemData({})
+    }
+
+    const update = () => {
+        updateNote(selectedItem.userId, selectedItem.noteId, { 
+            date: selectedItem.date, 
+            title: watch("Title"), 
+            note: watch("Note"), 
+            userId: selectedItem.userId 
+        })
+        setValue("Title","");
+        setValue("Note", "");
+    }
 
     // const handleSubmit = async (event) => {
     //     event.preventDefault();
@@ -64,12 +80,18 @@ const NewNote = ({ selectedItem }) => {
                     />
                     {errors.Note && <span className="text-danger">{errors.Note.message}</span>}
                 </div>
-                {
-                    btnControl ?
-                        <button type="submit">Notu Ekle</button>
-                    :
-                        <button type="submit">Değişiklikleri kaydet</button>
-                }
+                <div className="buttonDiv">
+                    {
+                        btnControl ?
+                            <button type="submit" className="btn btn-outline-success">Notu Ekle</button>
+                        :
+                            <>
+                                <button type="button" className="btn btn-outline-success" onClick={() => update()}>Değişiklikleri kaydet</button>
+                                <button type="button" className="btn btn-outline-primary" onClick={() => setUpdateItemData({})}>Yeni not oluştur</button>
+                            </>
+                    }
+                    
+                </div>
             </form>
         </div>
     )

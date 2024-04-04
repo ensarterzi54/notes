@@ -16,7 +16,7 @@ const NavBar = () => {
             <div>
                 { user ? <img src={user ? user.user.photoURL : null} style={imgStyle} alt="" /> : null }
                 
-                <span>{ user ? user.user.email : null }</span>
+                <span>{ user ? user.user.displayName : null }</span>
             </div>
             
             <ul className="p-0">

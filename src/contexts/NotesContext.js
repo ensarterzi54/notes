@@ -9,6 +9,11 @@ const NotesContextProvider = ({ children }) => {
     const { user } = useContext(AuthContext)
     const [notes, setNotes] = useState(null)
 
+    const updateNote = (userID, noteID, payload) => {
+        set(ref(database, `users/${userID}/notes/${noteID}`), payload)
+        console.log("userID, noteID, payload",userID, noteID, payload)
+    }
+
     const addNote = async (title, note) => {
         await fillNotes()
         const currentDate = new Date();
@@ -50,6 +55,7 @@ const NotesContextProvider = ({ children }) => {
             }
         })
     }
+
     const removeNote = (name, userID, noteID) => {
         console.log("id : ", noteID)
         set(ref(database, `users/${userID}/notes/${noteID}`), null)
@@ -69,7 +75,7 @@ const NotesContextProvider = ({ children }) => {
         });
     }, [])
     return (
-        <NotesContext.Provider value={{ addNote, getData, removeNote }}>
+        <NotesContext.Provider value={{ addNote, getData, removeNote, updateNote }}>
             { children }
         </NotesContext.Provider>
     )

@@ -1,3 +1,31 @@
 .notes {
-    border: 1px solid black;
+    /* border: 1px solid black; */
+}
+
+.notesList {
+    list-style: none;
+    padding: 0px;
+}
+
+.notesList li {
+    /* border: 1px solid black; */
+    padding: 10px 10px;
+    border-radius: 6px;
+}
+
+.notesList li span {
+    margin-right: 5px;
+}
+
+.notesList li span {
+    color: rgb(100, 156, 220);
+}
+
+.divInLi {
+    display: flex;
+    justify-content: space-between;
+}
+
+.noteInfo {
+    padding-top: 4px;
 }
