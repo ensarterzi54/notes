@@ -1,4 +1,17 @@
 .home {
     height: 100%;
+    padding: 0px 20px;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.bg-black {
+    background-color: #96adc2;
+}
+
+.bg-red {
+    background-color: #ff3700;
 }
 
