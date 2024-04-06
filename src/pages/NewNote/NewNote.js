@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { NotesContext } from '../../contexts/NotesContext';
 import { useForm } from 'react-hook-form';
 import "../NewNote/NewNote.css"
+import { ThemeContext } from '../../contexts/ThemeContext';
 const NewNote = ({ selectedItem, setUpdateItemData }) => {
     const [btnControl, setBtnControl] = useState(true)
     const { addNote, updateNote } = useContext(NotesContext)
+    const { bgColor } = useContext(ThemeContext)
 
     const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm()
 
@@ -52,10 +54,10 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
         <div className="col-md-6 mt-5 p-0">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
-                    <label htmlFor="title">Başlık Girin</label>
+                    <label className={bgColor === "dark" ? "textWhite" : undefined} htmlFor="title">Başlık Girin</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="form-control noteInput"
                         id="title"
                         {...register("Title", {
                             required: { value: true, message: "Doldurulması zorunlu alan" },
@@ -67,7 +69,7 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="note">Not</label>
+                    <label className={bgColor === "dark" ? "textWhite" : undefined} htmlFor="note">Not</label>
                     <textarea
                         className="form-control"
                         id="note"

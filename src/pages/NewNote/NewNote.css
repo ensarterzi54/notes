@@ -5,3 +5,11 @@
 .buttonDiv button {
     margin-right: 15px;
 }
+
+.textWhite {
+    color: white;
+}
+
+.form-control {
+    background-color: blue;
+}

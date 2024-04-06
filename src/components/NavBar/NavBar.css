@@ -1,4 +1,11 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+}
+
 .nav ul {
+    padding: 0px 20px;
+    margin: 0px;
     list-style-type: none;
 }
 
@@ -7,3 +14,11 @@
     padding-left: 1px
 }
 
+.userPanel {
+    display: flex; 
+    align-items: center;
+}
+
+.textWhite {
+    color: white;
+}

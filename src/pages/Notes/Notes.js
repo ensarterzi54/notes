@@ -8,6 +8,7 @@ import { NotesContext } from '../../contexts/NotesContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import { database } from '../../firebase/firebaseConfig';
 import { onValue, ref } from 'firebase/database';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 const Notes = ({ setUpdateItemData }) => {
 
@@ -16,7 +17,7 @@ const Notes = ({ setUpdateItemData }) => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext)
   const { getData, removeNote } = useContext(NotesContext)
-
+  const { bgColor } = useContext(ThemeContext)
   const [datas, setDatas] = useState([])
 
   const get = () => {
@@ -63,8 +64,8 @@ const Notes = ({ setUpdateItemData }) => {
           <li key={index} className="mt-2 mb-2">
             <div className="divInLi">
               <div className="noteInfo">
-                <span>Başlık:</span> {item.title} - 
-                <span>Açıklama:</span> {item.note}
+                <span>Başlık:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{item.title}</p> - 
+                <span>Açıklama:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{item.note}</p>
               </div>
               <div>
                 <button onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)} type="button" className="btn btn-outline-primary">SİL</button> -
