@@ -37,10 +37,11 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
         })
         setValue("Title","");
         setValue("Note", "");
+        setBtnControl(true)
     }
 
     return (
-        <div className="col-md-6 mt-5 p-0">
+        <div className="col-md-6 mt-5 p-0 mb-5">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <label className={bgColor === "dark" ? "textWhite" : undefined} htmlFor="title">Başlık Girin</label>
@@ -62,7 +63,7 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
                     <textarea
                         className="form-control"
                         id="note"
-                        rows="10"
+                        rows="15"
                         {...register("Note", {
                             required: { value: true, message: "Doldurulması zorunlu alan" },
                             minLength: { value: 2, message: "En az 2 karakter girebilirsiniz." },
@@ -73,17 +74,21 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
                 </div>
                 <div className="buttonDiv">
                     {
-                        btnControl ?
+                        btnControl &&
                             <button type="submit" className="btn btn-outline-success">Notu Ekle</button>
-                        :
-                            <>
-                                <button type="button" className="btn btn-outline-success" onClick={() => update()}>Değişiklikleri kaydet</button>
-                                <button type="button" className="btn btn-outline-primary" onClick={() => setUpdateItemData({})}>Yeni not oluştur</button>
-                            </>
                     }
                     
                 </div>
             </form>
+
+            {
+                !btnControl &&
+                <>
+                    <button type="button" className="btn btn-outline-primary" onClick={() => update()}>Değişiklikleri kaydet</button>
+                    <button type="button" className="btn btn-outline-success" onClick={() => setUpdateItemData({})}>Yeni not oluştur</button>
+                </>
+            }
+            
         </div>
     )
 }

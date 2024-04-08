@@ -59,7 +59,7 @@ const Notes = ({ setUpdateItemData }) => {
                     <span>Açıklama:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{item.note}</p>
                   </div>
                   <div>
-                    <button onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)} type="button" className="btn btn-outline-primary">SİL</button> -
+                    <button onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)} type="button" className="btn btn-outline-danger">SİL</button> -
                     <button type="button" className="btn btn-outline-primary" onClick={() => setUpdateItemData(item)}>GÜNCELLE</button>
                   </div>
                 </div>
