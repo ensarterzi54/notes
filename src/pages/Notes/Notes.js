@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { notes } from '../../reducers/Note'
-import { deleteNote } from '../../reducers/Note'
 import './Notes.css'
 import { useNavigate } from "react-router-dom";
 import { NotesContext } from '../../contexts/NotesContext';
@@ -12,81 +10,67 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 
 const Notes = ({ setUpdateItemData }) => {
 
-  const note = useSelector(notes);
-  const dispatch = useDispatch()
-  const navigate = useNavigate();
-  const { user } = useContext(AuthContext)
-  const { getData, removeNote } = useContext(NotesContext)
-  const { bgColor } = useContext(ThemeContext)
-  const [datas, setDatas] = useState([])
-
-  const get = () => {
-    if (user) {
-      getData(user).then(res => {
-        const arr = []
-        if (res) {
-          for (const key of Object.keys(res)) {
-            arr.push({
-              noteId: key,   // bu yapı notes 'e özel yapıldı
-              ...res[key],
-            })
+    const { user } = useContext(AuthContext)
+    const { getData, removeNote } = useContext(NotesContext)
+    const { bgColor } = useContext(ThemeContext)
+    const [datas, setDatas] = useState([])
+    const get = () => {
+      if (user) {
+        getData(user).then(res => {
+          const arr = []
+          if (res) {
+            for (const key of Object.keys(res)) {
+              arr.push({
+                noteId: key,   // bu yapı notes 'e özel yapıldı
+                ...res[key],
+              })
+            }
           }
-        }
-        arr.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setDatas(res ? arr : [])
-      })
+          arr.sort((a, b) => new Date(b.date) - new Date(a.date));
+          setDatas(res ? arr : [])
+        })
+      }
     }
-  }
 
-  const deleteNote = async (name, userId, noteId) => {
-    await removeNote(name, userId, noteId)
-    get()
-    setUpdateItemData({})
-  }
-
-  useEffect(() => {
-    const starCountRef = ref(database, 'users');
-    onValue(starCountRef, (snapshot) => {
-      const data = snapshot.val();
+    const deleteNote = async (name, userId, noteId) => {
+      await removeNote(name, userId, noteId)
       get()
-    });
-    get()
-  }, [user])
+      setUpdateItemData({})
+    }
 
-  const routeToUpdatedPage = (id) => {
-    navigate(`/noteUpdate/${id}`);
-  }
+    useEffect(() => {
+      const starCountRef = ref(database, 'users');
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+        get()
+      });
+      get()
+    }, [user])
 
-  return (
-    <div className="col-md-6 mt-5 notes">
-      <ul className="notesList">
-        {datas ? datas.map((item, index) =>
-          <li key={index} className="mt-2 mb-2">
-            <div className="divInLi">
-              <div className="noteInfo">
-                <span>Başlık:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{item.title}</p> - 
-                <span>Açıklama:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{item.note}</p>
-              </div>
-              <div>
-                <button onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)} type="button" className="btn btn-outline-primary">SİL</button> -
-                <button type="button" className="btn btn-outline-primary" onClick={() => setUpdateItemData(item)}>GÜNCELLE</button>
-              </div>
-            </div>
-          </li>
-        )
-          :
-          null}
-      </ul>
-      {/* <ul>
-        {note && note.map((item, index) =>
-          <li key={index}>{item.noteTitle} - {item.noteDescription} -
-            <button onClick={() => dispatch(deleteNote({ id: item.id }))}>Sil</button>
-            <button onClick={() => routeToUpdatedPage(item.id)}>Güncelle</button>
-          </li>
-        )}
-      </ul> */}
-    </div>
-  )
+    return (
+      <div className="col-md-6 mt-5 notes">
+        <ul className="notesList">
+          {
+            datas ? datas.map((item, index) =>
+              <li key={index} className="mt-2 mb-2">
+                <div className="divInLi">
+                  <div className="noteInfo">
+                    <span>Başlık:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{item.title}</p> - 
+                    <span>Açıklama:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{item.note}</p>
+                  </div>
+                  <div>
+                    <button onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)} type="button" className="btn btn-outline-primary">SİL</button> -
+                    <button type="button" className="btn btn-outline-primary" onClick={() => setUpdateItemData(item)}>GÜNCELLE</button>
+                  </div>
+                </div>
+              </li>
+            )
+            :
+            null
+          }
+        </ul>
+      </div>
+    )
 }
 
 export default Notes;

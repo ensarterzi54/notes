@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar';
-import AddNote from '../AddNote/AddNote';
 import Notes from '../Notes/Notes';
 import AuthContextProvider from '../../contexts/AuthContext';
 import NewNote from '../NewNote/NewNote';

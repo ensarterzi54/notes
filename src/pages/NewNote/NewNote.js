@@ -28,10 +28,6 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
         }
     }, [selectedItem]);
 
-    const clearNote = () => {
-        setUpdateItemData({})
-    }
-
     const update = () => {
         updateNote(selectedItem.userId, selectedItem.noteId, { 
             date: selectedItem.date, 
@@ -42,13 +38,6 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
         setValue("Title","");
         setValue("Note", "");
     }
-
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     await addNote(title, note)
-    //     setTitle("")
-    //     setNote("")
-    // }
 
     return (
         <div className="col-md-6 mt-5 p-0">
