@@ -67,12 +67,14 @@ const NotesContextProvider = ({ children }) => {
     }
     
     useEffect(() => {
-        const starCountRef = ref(database, `users/${user.user.uid}/notes`);
-        onValue(starCountRef, (snapshot) => {
-            const data = snapshot.val();
-            console.log("hj",data)
-            setNotes(data)
-        });
+        if(user) {
+            const starCountRef = ref(database, `users/${user.user.uid}/notes`);
+            onValue(starCountRef, (snapshot) => {
+                const data = snapshot.val();
+                console.log("hj",data)
+                setNotes(data)
+            });
+        }
     }, [])
     return (
         <NotesContext.Provider value={{ addNote, getData, removeNote, updateNote }}>
