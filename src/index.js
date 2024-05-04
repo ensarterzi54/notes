@@ -8,7 +8,6 @@ import { RouterProvider } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 import "../src/firebase/firebaseConfig"
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 root.render(
     <StrictMode>
       <RouterProvider router={router} />

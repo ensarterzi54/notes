@@ -7,7 +7,12 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { database } from '../../firebase/firebaseConfig';
 import { onValue, ref } from 'firebase/database';
 import { ThemeContext } from '../../contexts/ThemeContext';
-
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import Pdf from "../../components/Pdf/Pdf"
+import Button from '@mui/material/Button';
+import { FileDownload } from "@mui/icons-material";
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 const Notes = ({ setUpdateItemData }) => {
 
     const { user } = useContext(AuthContext)
@@ -55,11 +60,29 @@ const Notes = ({ setUpdateItemData }) => {
               <li key={index} className="mt-2 mb-2">
                 <div className="divInLi">
                   <div className="noteInfo">
-                    <span>Başlık:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{item.title}</p> - 
-                    <span>Açıklama:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{item.note}</p>
+                    <span>Başlık:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{ item.title.length > 20 ? `${item.title.slice(0,20)}...` : item.title }</p> - 
+                    <span>Açıklama:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{ item.note.length > 15 ? `${item.note.slice(0,15)}...` : item.note }</p>
                   </div>
                   <div>
-                    <button onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)} type="button" className="btn btn-outline-danger">SİL</button> -
+                    <PDFDownloadLink document={<Pdf title={item.title} note={item.note} />} fileName="somename18.pdf">
+                      {
+                        ({ blob, url, loading, error }) =>
+                        <Button
+                          className="mr-2"
+                          variant="contained"
+                          color="primary"
+                          startIcon={<FileDownload />}>
+                          Pdf
+                        </Button>
+                      }
+                    </PDFDownloadLink>
+                    <IconButton 
+                      aria-label="delete" 
+                      size="small" 
+                      color="secondary"
+                      onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)}>
+                      <DeleteIcon />Sil
+                    </IconButton>
                     <button type="button" className="btn btn-outline-primary" onClick={() => setUpdateItemData(item)}>GÜNCELLE</button>
                   </div>
                 </div>
