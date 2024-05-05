@@ -7,7 +7,7 @@ import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
-
+import sweetalert from '../../messageBox/sweetalert'
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 62,
     height: 34,
@@ -73,7 +73,7 @@ const NavBar = () => {
     }
 
     return (
-        <div className="nav container">
+        <div className="nav container p-0">
             <div className="userPanel">
                 <div>
                     { user ? <img src={user ? user.user.photoURL : undefined} style={imgStyle} alt="" /> : null }
@@ -81,7 +81,7 @@ const NavBar = () => {
                     <span className={bgColor === "dark" ? "textWhite" : null }>{ user ? user.user.displayName : null }</span>
                 </div>
                 
-                <ul>
+                <ul className="p-0">
                     { 
                         user ?
                             <li>
@@ -91,7 +91,7 @@ const NavBar = () => {
                             </li> 
                             : 
                             <li>
-                                <Link onClick={() => login()}>
+                                <Link onClick={() => login().then(() => sweetalert.welcome())}>
                                     <button type="button" className="btn btn-outline-primary"><img src="/images/google-logo.png" alt="" style={{ width: "30px" }} />Google ile Giriş Yap</button>
                                 </Link>
                             </li> 
@@ -102,6 +102,7 @@ const NavBar = () => {
             <div>
                 <FormGroup>
                     <FormControlLabel
+                        className="m-0"
                         control = {
                             <MaterialUISwitch sx={{ m: 1 }} onClick={(event) => handleMui(event)} />
                         }

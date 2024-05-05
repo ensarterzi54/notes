@@ -3,6 +3,7 @@ import { NotesContext } from '../../contexts/NotesContext';
 import { useForm } from 'react-hook-form';
 import "../NewNote/NewNote.css"
 import { ThemeContext } from '../../contexts/ThemeContext';
+import sweetalert from '../../messageBox/sweetalert';
 const NewNote = ({ selectedItem, setUpdateItemData }) => {
     const [btnControl, setBtnControl] = useState(true)
     const { addNote, updateNote } = useContext(NotesContext)
@@ -11,7 +12,7 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
     const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm()
 
     const onSubmit = async (data) => {
-        await addNote(data.Title, data.Note)
+        await addNote(data.Title, data.Note).then(() => sweetalert.success())
         reset()
     }
 
