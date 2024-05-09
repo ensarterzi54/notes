@@ -4,10 +4,13 @@ import { useForm } from 'react-hook-form';
 import "../NewNote/NewNote.css"
 import { ThemeContext } from '../../contexts/ThemeContext';
 import sweetalert from '../../messageBox/sweetalert';
+import { useTranslation } from 'react-i18next';
+
 const NewNote = ({ selectedItem, setUpdateItemData }) => {
     const [btnControl, setBtnControl] = useState(true)
     const { addNote, updateNote } = useContext(NotesContext)
     const { bgColor } = useContext(ThemeContext)
+    const { t, i18n } = useTranslation();
 
     const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm()
 
@@ -45,7 +48,7 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
         <div className="col-md-6 mt-5 p-0 mb-5">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
-                    <label className={bgColor === "dark" ? "textWhite" : undefined} htmlFor="title">Başlık Girin</label>
+                    <label className={bgColor === "dark" ? "textWhite" : undefined} htmlFor="title">{t('Title')}</label>
                     <input
                         type="text"
                         className="form-control noteInput"
@@ -60,7 +63,7 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
                 </div>
 
                 <div className="form-group">
-                    <label className={bgColor === "dark" ? "textWhite" : undefined} htmlFor="note">Not</label>
+                    <label className={bgColor === "dark" ? "textWhite" : undefined} htmlFor="note">{t("Note")}</label>
                     <textarea
                         className="form-control"
                         id="note"
@@ -76,7 +79,7 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
                 <div className="buttonDiv">
                     {
                         btnControl &&
-                            <button type="submit" className="btn btn-outline-success">Notu Ekle</button>
+                            <button type="submit" className="btn btn-outline-success">{t("Add Note")}</button>
                     }
                     
                 </div>
@@ -85,8 +88,8 @@ const NewNote = ({ selectedItem, setUpdateItemData }) => {
             {
                 !btnControl &&
                 <>
-                    <button type="button" className="btn btn-outline-primary" onClick={() => update()}>Değişiklikleri kaydet</button>
-                    <button type="button" className="btn btn-outline-success" onClick={() => setUpdateItemData({})}>Yeni not oluştur</button>
+                    <button type="button" className="btn btn-outline-primary" onClick={() => update()}>{ t("Save Changes") }</button>
+                    <button type="button" className="btn btn-outline-success" onClick={() => setUpdateItemData({})}>{ t("Create New Note") }</button>
                 </>
             }
             

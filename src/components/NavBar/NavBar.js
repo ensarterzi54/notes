@@ -8,6 +8,11 @@ import { styled } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import sweetalert from '../../messageBox/sweetalert'
+import { useTranslation } from 'react-i18next';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
+import i18n from '../../i18n'
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 62,
     height: 34,
@@ -55,12 +60,21 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     },
 }));
 const NavBar = () => {
+    const [langTr, setLangTr] = useState('tr')
+    const [langEn, setLangEn] = useState('en')
+    
     const { user, login, logout } = useContext(AuthContext)
     const { bgColor, setBgColor } = useContext(ThemeContext)
+    const { t, i18n } = useTranslation();
+
     const imgStyle = {
         width: '30px',
         borderRadius: '15px',
         margin: '2px',
+    }
+
+    const styles = {
+
     }
 
     const handleMui = (e) => {
@@ -70,6 +84,10 @@ const NavBar = () => {
         } else {
             setBgColor("white")
         }
+    }
+
+    const changeLang = (lng) => {
+        console.log(lng)
     }
 
     return (
@@ -86,13 +104,15 @@ const NavBar = () => {
                         user ?
                             <li>
                                 <Link onClick={() => logout()}>
-                                    <button type="button" className="btn btn-outline-primary mb-2">Çıkış Yap</button>
+                                    <button type="button" className="btn btn-outline-primary mb-2">{ t("Log Out") }</button>
                                 </Link>
                             </li> 
                             : 
                             <li>
                                 <Link onClick={() => login().then(() => sweetalert.welcome())}>
-                                    <button type="button" className="btn btn-outline-primary"><img src="/images/google-logo.png" alt="" style={{ width: "30px" }} />Google ile Giriş Yap</button>
+                                    <button type="button" className="btn btn-outline-primary">
+                                        <img src="/images/google-logo.png" alt="" style={{ width: "30px" }} />{t("Login with google")}
+                                    </button>
                                 </Link>
                             </li> 
                     }
@@ -100,7 +120,26 @@ const NavBar = () => {
             </div>
 
             <div>
-                <FormGroup>
+                <FormControl fullWidth style={{display: "inline"}}>
+                    <NativeSelect
+                        className='MuiNativeSelect-outlined MuiNativeSelect-select'
+                        classes={styles}
+                        defaultValue={"tr"}
+                        inputProps={{
+                            name: 'age',
+                            id: 'uncontrolled-native'
+                        }}
+                        onChange={
+                            (val) => {
+                                i18n.changeLanguage(val.target.value);
+                            }
+                        }
+                    >
+                        <option value={"en"}>İngilizce</option>
+                        <option value={"tr"}>Türkçe</option>
+                    </NativeSelect>
+                </FormControl>
+                <FormGroup style={{display: "inline"}}>
                     <FormControlLabel
                         className="m-0"
                         control = {

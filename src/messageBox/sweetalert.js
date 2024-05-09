@@ -1,9 +1,10 @@
 import Swal from 'sweetalert2'
+import i18next from '../i18n'
 
 export default {
     error(err) {
         Swal.fire({
-            title: 'Error!',
+            title: i18next.t('Error!'),
             text: err,
             icon: 'error',
             confirmButtonText: 'Cancel'
@@ -13,7 +14,7 @@ export default {
         Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Hoşgeldiniz",
+            title: i18next.t('Welcome'),
             showConfirmButton: false,
             timer: 1500
         });
@@ -22,7 +23,7 @@ export default {
         Swal.fire({
             position: "top-center",
             icon: "success",
-            title: "Notunuz kaydedildi",
+            title: i18next.t('Save Note'),
             showConfirmButton: false,
             timer: 2000
         });
@@ -30,13 +31,13 @@ export default {
     deleteConfirmation() {
         return new Promise((resolve) => {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: i18next.t('Are you sure?'),
+                text: i18next.t("You won't be able to revert this!"),
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: i18next.t('Yes')
             }).then((result) => {
                 resolve(result);
             });
@@ -44,8 +45,8 @@ export default {
     },
     deleted() {
         Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
+            title: i18next.t('Deleted'),
+            text: i18next.t('Your file has been deleted.'),
             icon: "success"
         });
     }
