@@ -20,7 +20,9 @@ const resources = {
             "You won't be able to revert this!": "Bunu geri döndüremezsiniz!",
             "Deleted": "Silindi",
             "Your note has been deleted.": "Notunuz silindi.",
-            "Yes": "Evet"
+            "Yes": "Evet",
+            "English": "İngilizce",
+            "Turkish": "Türkçe"
         }
     },
     en: {
@@ -41,7 +43,9 @@ const resources = {
             "You won't be able to revert this!": "You won't be able to revert this!",
             "Deleted": "Deleted",
             "Your note has been deleted.": "Your file has been deleted.",
-            "Yes": "Yes"
+            "Yes": "Yes",
+            "English": "English",
+            "Turkish": "Turkish"
         }
     }
 };

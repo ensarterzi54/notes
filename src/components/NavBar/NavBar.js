@@ -13,6 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import i18n from '../../i18n'
+
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 62,
     height: 34,
@@ -59,9 +60,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
       borderRadius: 20 / 2,
     },
 }));
+
 const NavBar = () => {
-    const [langTr, setLangTr] = useState('tr')
-    const [langEn, setLangEn] = useState('en')
     
     const { user, login, logout } = useContext(AuthContext)
     const { bgColor, setBgColor } = useContext(ThemeContext)
@@ -74,20 +74,15 @@ const NavBar = () => {
     }
 
     const styles = {
-
+        backgroundColor: "#dadde0"
     }
 
     const handleMui = (e) => {
-        console.log(e)
         if(e.target.checked) {
             setBgColor("dark")
         } else {
             setBgColor("white")
         }
-    }
-
-    const changeLang = (lng) => {
-        console.log(lng)
     }
 
     return (
@@ -122,8 +117,9 @@ const NavBar = () => {
             <div>
                 <FormControl fullWidth style={{display: "inline"}}>
                     <NativeSelect
+                        variant='standard'
                         className='MuiNativeSelect-outlined MuiNativeSelect-select'
-                        classes={styles}
+                        style={bgColor === "dark" ? styles : null}
                         defaultValue={"tr"}
                         inputProps={{
                             name: 'age',
@@ -135,20 +131,19 @@ const NavBar = () => {
                             }
                         }
                     >
-                        <option value={"en"}>İngilizce</option>
-                        <option value={"tr"}>Türkçe</option>
+                        <option value={"en"}>{t("English")}</option>
+                        <option value={"tr"}>{t("Turkish")}</option>
                     </NativeSelect>
                 </FormControl>
-                <FormGroup style={{display: "inline"}}>
+                <FormGroup style={{display: "inline", marginBottom: "5px"}}>
                     <FormControlLabel
-                        className="m-0"
+                        className="mb-3"
                         control = {
                             <MaterialUISwitch sx={{ m: 1 }} onClick={(event) => handleMui(event)} />
                         }
                     />
                 </FormGroup>
             </div>
-            
         </div>
     )
 }
