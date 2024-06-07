@@ -15,6 +15,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import sweetalert from '../../messageBox/sweetalert';
 import { useTranslation } from 'react-i18next';
+import FilterNote from '../FilterNote/FilterNote';
 
 const Notes = ({ setUpdateItemData }) => {
 
@@ -23,6 +24,7 @@ const Notes = ({ setUpdateItemData }) => {
     const { bgColor } = useContext(ThemeContext)
     const [datas, setDatas] = useState([])
     const { t, i18n } = useTranslation();
+    const [searchText, setSearchText] = useState("")
 
     const get = () => {
       if (user) {
@@ -62,8 +64,23 @@ const Notes = ({ setUpdateItemData }) => {
       get()
     }, [user])
 
+    useEffect(() => {
+      console.log("searchText: ", searchText)
+      console.log("userEffect çalıştı")
+      if(searchText !== "") {
+        console.log("if çalıştı")
+        const value = searchText;
+        const filtered = datas.filter(item => item.note.includes(value));
+        setDatas(filtered);
+      } else {
+        get()
+      }
+    }, [searchText])
+
     return (
       <div className="col-md-6 mt-5 notes p-0">
+        <FilterNote searchText={ searchText } setSearchText={ setSearchText } />
+
         <ul className="notesList">
           {
             datas ? datas.map((item, index) =>
@@ -71,8 +88,10 @@ const Notes = ({ setUpdateItemData }) => {
                 <div className="divInLi">
                   
                   <div className="noteInfo">
-                        <span>{t("Title")}:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{ item.title.length > 20 ? `${item.title.slice(0,20)}...` : item.title }</p> - 
-                        <span>{t("Note")}:</span> <p className={bgColor === "dark" ? "textWhite" : null }>{ item.note.length > 15 ? `${item.note.slice(0,15)}...` : item.note }</p>    
+                        <span>{t("Title")}:</span> 
+                        <p className={bgColor === "dark" ? "textWhite" : null }>{ item.title.length > 20 ? `${item.title.slice(0,20)}...` : item.title }</p> - 
+                        <span>{t("Note")}:</span> 
+                        <p className={bgColor === "dark" ? "textWhite" : null }>{ item.note.length > 15 ? `${item.note.slice(0,15)}...` : item.note }</p>    
                   </div>
                   <div>
                     <PDFDownloadLink document={<Pdf title={item.title} note={item.note} />} fileName="somename18.pdf">
@@ -87,6 +106,7 @@ const Notes = ({ setUpdateItemData }) => {
                         </Button>
                       }
                     </PDFDownloadLink>
+
                     <IconButton 
                       aria-label="delete" 
                       size="small" 
@@ -94,6 +114,7 @@ const Notes = ({ setUpdateItemData }) => {
                       onClick={() => deleteNote(user.user.displayName, user.user.uid, item.noteId)}>
                       <DeleteIcon />{t("Delete")}
                     </IconButton>
+
                     <button type="button" className="btn btn-outline-primary" onClick={() => setUpdateItemData(item)}>{t("Update")}</button>
                   </div>
                 </div>
